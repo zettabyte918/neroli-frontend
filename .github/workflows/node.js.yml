@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Install all depedencies
         run: npm install
-      - name: Build ${{ env.PROJECT_NAME }} project
+      - name: Clone ${{ env.PROJECT_NAME }} repository
         run: npm run build
-      - name: Copy ${{ env.PROJECT_NAME }} build to nginx static serve
+      - name: Clone ${{ env.PROJECT_NAME }} repository
         run: sudo cp -r dist/lieblings /var/www/nerolicosmetic.com/
