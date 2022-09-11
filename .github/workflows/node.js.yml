@@ -15,11 +15,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 16.15.1
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.15.1
-          cache: 'npm'
       - run: npm install
       - run: npm run build
       - run: sudo cp -r dist/lieblings /var/www/nerolicosmetic.com/
