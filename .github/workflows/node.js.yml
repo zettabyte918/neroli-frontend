@@ -2,7 +2,8 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: Build Neroli
-
+env:
+  PROJECT_NAME: Neroli
 on:
   push:
     branches: ['master']
@@ -10,15 +11,15 @@ on:
     branches: ['master']
 
 jobs:
-  build:
+  build-neroli-static:
     runs-on: self-hosted
 
     steps:
-      - name: Clone  Neroli repository
+      - name: Clone $PROJECT_NAME repository
         uses: actions/checkout@v3
       - name: Install all depedencies
         run: npm install
-      - name: Build Neroli project
+      - name: Build $PROJECT_NAME project
         run: npm run build
-      - name: Copy Neroli  build to nginx static serve
+      - name: Copy $PROJECT_NAME build to nginx static serve
         run: sudo cp -r dist/lieblings /var/www/nerolicosmetic.com/
