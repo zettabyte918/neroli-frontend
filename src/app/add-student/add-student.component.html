@@ -1,0 +1,129 @@
+<div class="alert alert-warning" role="alert" style="margin-top: 15px;" *ngIf="log.formAf">
+
+  Le principe est assez simple. Pour le compte de notre  marque,Neroli  vous achetez , un produit etVous touchez, ainsi, des commissions sur vos propres ventes. 
+
+Pour aller plus loin et gagnez plus,  vous  pouvez  parrainer des proches pour qu’ils deviennent, à leur tour, des ambassadeurs, 
+Vous pouvez, ainsi, profiter d’un pourcentage sur les ventes et les achats des produits qui varie entre 20% et 40%
+</div>
+<mat-form-field class="example-chip-list" appearance="fill">
+  <mat-label>vootre panniers</mat-label>
+  <mat-chip-list #chipList aria-label="Fruit selection">
+    <mat-chip
+      *ngFor="let fruit of fruits"
+     >
+      {{fruit}}
+    
+    </mat-chip>
+ 
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete"   >
+    <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit"  [disabled]='dis'>
+      {{fruit}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<div>
+<label for="exampleInputPassword1">Totale</label>
+</div>
+<input type="text" id="disabledTextInput" class="form-control" style="color: red;font-size: large;" [value]="tot"  placeholder="Disabled input" [disabled]='dis'>
+<div class="col-sm-12">
+    
+  <div class="form-check form-check-inline" style="display: block;" >
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="livrison" (change)="fulivr($event)"  >
+  
+    
+    <label class="form-check-label" for="inlineRadio1" style="padding-left: 2px;" style="display: block;" >livraison</label>
+  </div>
+  <div class="form-check form-check-inline " style="display: block;" >
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="poste"  (change)="fuposte($event)">
+
+    <label class="form-check-label" for="inlineRadio2">par poste</label>
+  </div>
+  <div class="form-check form-check-inline" style="display: block;" >
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="direct"  (change)="fudir($event)">
+   
+    <label class="form-check-label" for="inlineRadio2">direct</label>
+  </div>
+ 
+</div>
+<div class="form-group col-md-12" *ngIf="testAdr" >
+  <label for="inputEmail4">adresse</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]='adresse' ></textarea>
+</div>
+<form [formGroup]="user" *ngIf="log.formAf" >
+  
+  
+  <div class="form-row" >
+    <div class="form-group col-md-12">
+      <label for="inputEmail4">Nom</label>
+      <input type="text" class="form-control" id="inputEmail4" placeholder="entrer votre nom"  formControlName='name' >
+      <p *ngIf="user.controls.name.hasError('required') && this.user.controls.name.touched" style="color: red;"> nom obligatoire </p>
+    </div>
+    <div class="form-group col-md-12">
+      <label for="inputPassword4">Prenom</label>
+      <input type="text" class="form-control" id="inputPassword4" placeholder="entrer votre prenom"  formControlName='prenom'>
+      <p *ngIf="user.controls.prenom.hasError('required') && this.user.controls.prenom.touched" style="color: red;"> prenom obligatoire </p>
+    </div>
+  </div>
+  <div class="form-row" >
+    <div class="form-group col-md-12">
+      <label for="inputEmail4">Email</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Email"  formControlName='email'>
+      <p *ngIf="user.controls.email.hasError('required') && this.user.controls.email.touched" style="color: red;"> email obligatoire </p>
+      <p *ngIf="user.controls.email.hasError('required') && this.user.controls.email.touched" style="color: red;">  email n'est pas correct </p>
+    </div>
+    <div class="form-group col-md-12">
+      <label for="inputPassword4">Téléphone</label>
+      <input type="number" class="form-control" id="inputPassword4" placeholder="Tél" formControlName='phone' >
+      <p *ngIf="user.controls.phone.hasError('required') && this.user.controls.phone.touched" style="color: red;"> téléphone obligatoire </p>
+    </div>
+  </div>
+  <div class="form-row" >
+    <div class="form-group col-md-12">
+      <label for="inputEmail4">CIN</label>
+      <input type="text" class="form-control" id="inputEmail4" placeholder="CIN" formControlName='cin' [(ngModel)]="pass">
+    </div>
+    <div class="form-group col-md-12">
+      <label for="inputPassword4">confirmé CIN</label>
+      <input type="text" class="form-control" id="inputPassword4" placeholder="CIN" formControlName='password'>
+      <p *ngIf="user.controls.password.hasError('obj') && this.user.controls.password.touched" style="color: red;"> non confirmer </p>
+    </div>
+  </div>
+
+
+  
+
+  <button type="button" [disabled]='!user.valid' class="btn btn-outline-primary" (click)="passerAff()">psser voter commande</button>
+</form>
+<!--formnonAff-->
+<form [formGroup]="userN" *ngIf="!log.formAf">
+  <div class="form-group col-md-12">
+    <label for="inputEmail4">Nom</label>
+    <input type="text" class="form-control" id="inputEmail4" placeholder="entrer votre nom"  formControlName='name' >
+    <p *ngIf="user.controls.name.hasError('required') && this.user.controls.name.touched" style="color: red;"> nom obligatoire </p>
+  </div>
+  <div class="form-group col-md-12">
+    <label for="inputPassword4">Prenom</label>
+    <input type="text" class="form-control" id="inputPassword4" placeholder="entrer votre Prenom"  formControlName='prenom'>
+    <p *ngIf="user.controls.prenom.hasError('required') && this.user.controls.prenom.touched" style="color: red;"> prenom obligatoire </p>
+  </div>
+
+<div class="form-row" >
+  <div class="form-group col-md-12">
+    <label for="inputEmail4">Email</label>
+    <input type="email" class="form-control" id="inputEmail4" placeholder="Email"  formControlName='email'>
+    <p *ngIf="user.controls.email.hasError('required') && this.user.controls.email.touched" style="color: red;"> email obligatoire </p>
+    <p *ngIf="user.controls.email.hasError('required') && this.user.controls.email.touched" style="color: red;">  email n'est pas correct </p>
+  </div>
+  <div class="form-group col-md-12">
+    <label for="inputPassword4">Téléphone</label>
+    <input type="number" class="form-control" id="inputPassword4" placeholder="Tél" formControlName='phone' >
+    <p *ngIf="user.controls.phone.hasError('required') && this.user.controls.phone.touched" style="color: red;"> prenom obligatoire </p>
+  </div>
+</div>
+
+
+  
+
+  <button type="button" [disabled]='!userN.valid' class="btn btn-outline-primary" (click)="passerNonAffliee()">Passer votre commande</button>
+</form>
