@@ -11,15 +11,15 @@ on:
     branches: ['master']
 
 jobs:
-  build-neroli-static:
+  build-static:
     runs-on: self-hosted
 
     steps:
-      - name: Clone $PROJECT_NAME repository
+      - name: Clone ${{ env.PROJECT_NAME }} repository
         uses: actions/checkout@v3
       - name: Install all depedencies
         run: npm install
-      - name: Build $PROJECT_NAME project
+      - name: Build ${{ env.PROJECT_NAME }} project
         run: npm run build
-      - name: Copy $PROJECT_NAME build to nginx static serve
+      - name: Copy ${{ env.PROJECT_NAME }} build to nginx static serve
         run: sudo cp -r dist/lieblings /var/www/nerolicosmetic.com/
