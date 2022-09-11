@@ -4,6 +4,8 @@
 name: Build Neroli
 env:
   PROJECT_NAME: Neroli
+  BUILD_SOURCE: dist/lieblings
+  BUILD_TARGET: /var/www/nerolicosmetic.com/
 on:
   push:
     branches: ['master']
@@ -22,4 +24,4 @@ jobs:
       - name: Clone ${{ env.PROJECT_NAME }} repository
         run: npm run build
       - name: Clone ${{ env.PROJECT_NAME }} repository
-        run: sudo cp -r dist/lieblings /var/www/nerolicosmetic.com/
+        run: sudo cp -r ${{ env.BUILD_SOURCE }} ${{ env.BUILD_TARGET }}
